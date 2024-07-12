@@ -1,0 +1,78 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model FoodDonation {
+  id             String    @id @default(cuid())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  foodItem       String?
+  expirationDate DateTime?
+  location       String?
+  quantity       Int?
+}
+
+model Request {
+  id                String                    @id @default(cuid())
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  quantityRequested Int?
+  requestStatus     EnumRequestRequestStatus?
+  location          String?
+  foodItem          String?
+}
+
+model RouteOptimization {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  routeId        String?
+  startPoint     String?
+  endPoint       String?
+  optimizedRoute Json?
+}
+
+model MachineLearning {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  area            String?
+  predictedDemand Int?
+}
+
+model Inventory {
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  quantityInStock Int?
+  expirationDate  DateTime?
+  foodItem        String?
+}
+
+model User {
+  id          String            @id @default(cuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  firstName   String?
+  lastName    String?
+  username    String            @unique
+  email       String?           @unique
+  password    String
+  roles       Json
+  address     String?
+  phoneNumber String?
+  userRole    EnumUserUserRole?
+}
+
+enum EnumRequestRequestStatus {
+  Option1
+}
+
+enum EnumUserUserRole {
+  Option1
+}
